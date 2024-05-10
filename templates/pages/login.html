@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+    <section class="hero is-fullheight">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-5-tablet is-4-desktop is-4-widescreen">
+
+                    <p class="title is-5 mb-5 has-text-centered">Cms/login</p>
+
+                    <form class="box" hx-post="{% url 'login' %}" hx-target="#messages-container">
+
+                        {% include 'partials/message.html' %}
+
+                        <div class="msg" id="messages-container"></div>
+
+                        <div class="field">
+                            <label for="" class="label">Username</label>
+                            <div class="control">
+                                <input type="text" name="username" class="input" placeholder="Username" minlength="3" required>
+                            </div>
+                            <p class="help is-danger" id="danger-username"></p>
+                        </div>
+
+                        <div class="field">
+                            <label for="" class="label">Password</label>
+                            <div class="control">
+                                <input type="password" name="password" class="input" placeholder="Password" minlength="5" required>
+                            </div>
+                            <p class="help is-danger" id="danger-password"></p>
+                        </div>
+
+                        <div class="field mt-5">
+                            <button type="submit" class="button is-primary is-fullwidth">Login</button>
+                        </div>
+
+                        <p class="has-text-centered mt-4">Forget Password: <a href="{% url 'forgot_password' %}" class="has-text-primary">click here</a></p>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+{% endblock %}

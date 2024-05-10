@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Cms{% endblock %}</title>
+    
+    <meta name="description" content="Content Management System">
+    <meta name="keywords" content="Cms, Blog, Posts">
+    <meta name="author" content="Suriya">
+
+    <!-- Open Graph meta tags for better social media sharing -->
+    <meta property="og:title" content="Cms">
+    <meta property="og:description" content="Content Management System">
+    <meta property="og:image" content="URL to your website's main image for sharing">
+    <meta property="og:url" content="URL to the current page">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+</head>
+
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+    {% include 'partials/nav.html' %}    
+
+    <div class="container">
+
+  	  {% block content %}
+      <!-- Content Goes here -->
+      {% endblock content %}
+      
+    </div>
+
+    <script src="https://unpkg.com/htmx.org@1.9.10" 
+            integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" 
+            crossorigin="anonymous"></script>
+</body>
+
+</html>
