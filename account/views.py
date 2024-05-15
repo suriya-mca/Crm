@@ -24,8 +24,8 @@ def register(request):
 		confirm_password = request.POST['confirm_password']
 
 		if not password == confirm_password:
-			response = HttpResponse("Pasword not matching")               
-			return retarget(response, '#danger-password')
+			response = HttpResponse("Confirm pasword not matching")               
+			return retarget(response, '#danger-confirm-password')
 
 		if User.objects.filter(username=username).exists():
 			response = HttpResponse("User name taken")               
@@ -38,7 +38,7 @@ def register(request):
 		user = User.objects.create_user(username=username, email=email, password=password)
 		user.save()
 
-		messages.success(request, 'Registered Successfully')
+		messages.success(request, 'Registered Successfully 👍')
 		return HttpResponseClientRedirect('/auth/login')
 		   
 	return render(request, 'pages/register.html')
@@ -103,8 +103,8 @@ def forgot_password(request):
 		user_token = UserToken.objects.create(user=user, token=reset_token, expiration_date=expiration_date)
 		user_token.save()
 		send_reset_email(email, reset_token)
-		print("email sent")
-		return HttpResponseClientRefresh()
+		response = HttpResponse("Email Sent ✔️")               
+		return retarget(response, '#email-button')
 
 	return render(request, 'pages/forget_password.html')
 
@@ -119,25 +119,24 @@ def reset_password(request, token):
 		user_token = UserToken.objects.filter(token=token).first()
 
 		if not user_token:
-			messages.warning(request, 'Invalid or expired token')
+			messages.warning(request, '⚠️ Invalid or expired token')
 			return HttpResponseClientRefresh()
         
 		if user_token.is_expired():
-			messages.warning(request, 'Token has expired')
+			messages.warning(request, '⚠️ Token has expired')
 			return HttpResponseClientRefresh()
 
 		if not password == confirm_password:
-			response = HttpResponse("Pasword not matching")               
-			return retarget(response, '#danger-password')
+			response = HttpResponse("Confirm pasword not matching")               
+			return retarget(response, '#danger-confirm-password')
 
 		user = user_token.user
 		user.set_password(password)
 		user.save()
 		user_token.mark_as_used()
 		
-		messages.success(request, 'Password reset successfully')
+		messages.success(request, 'Password reset successfully 👍')
 		return HttpResponseClientRefresh()
 
 	context = {"token": token}
-
 	return render(request, 'pages/reset_password.html', context)
