@@ -41,7 +41,7 @@ def register(request):
 		messages.success(request, 'Registered Successfully 👍')
 		return HttpResponseClientRedirect('/auth/login')
 		   
-	return render(request, 'pages/register.html')
+	return render(request, 'pages/auth/register.html')
 
 
 @require_http_methods(["GET", "POST"])
@@ -64,7 +64,7 @@ def login(request):
 		auth.login(request, user)
 		return HttpResponseClientRedirect('/auth/register')
        
-	return render(request, 'pages/login.html')
+	return render(request, 'pages/auth/login.html')
 
 
 @require_GET
@@ -106,7 +106,7 @@ def forgot_password(request):
 		response = HttpResponse("Email Sent ✔️")               
 		return retarget(response, '#email-button')
 
-	return render(request, 'pages/forget_password.html')
+	return render(request, 'pages/auth/forget_password.html')
 
 
 @require_http_methods(["GET", "POST"])
@@ -139,4 +139,4 @@ def reset_password(request, token):
 		return HttpResponseClientRefresh()
 
 	context = {"token": token}
-	return render(request, 'pages/reset_password.html', context)
+	return render(request, 'pages/auth/reset_password.html', context)
