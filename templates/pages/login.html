@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Login{% endblock %}
 
 {% block content %}
@@ -21,7 +23,7 @@
                         <div class="field">
                             <label for="" class="label">Username</label>
                             <div class="control">
-                                <input type="text" name="username" class="input" placeholder="Username" minlength="3" required>
+                                <input type="text" name="username" class="input" id="user-input" placeholder="Username" minlength="3" required>
                             </div>
                             <p class="help is-danger" id="danger-username"></p>
                         </div>
@@ -29,7 +31,7 @@
                         <div class="field">
                             <label for="" class="label">Password</label>
                             <div class="control">
-                                <input type="password" name="password" class="input" placeholder="Password" minlength="5" required>
+                                <input type="password" name="password" class="input" id="password-input" placeholder="Password" minlength="5" required>
                             </div>
                             <p class="help is-danger" id="danger-password"></p>
                         </div>
@@ -47,5 +49,7 @@
         </div>
     </div>
     </section>
+
+    <script src="{% static 'js/auth/login.js' %}" defer></script>
 
 {% endblock %}
