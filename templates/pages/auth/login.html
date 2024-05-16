@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
-{% load static %}
-
 {% block title %}Login{% endblock %}
+
+{% load static %}
 
 {% block content %}
 
@@ -21,26 +21,28 @@
                         <div class="msg" id="messages-container"></div>
 
                         <div class="field">
-                            <label for="" class="label">Username</label>
+                            <label for="user-input" class="label">Username</label>
                             <div class="control">
-                                <input type="text" name="username" class="input" id="user-input" placeholder="Username" minlength="3" required>
+                                <input type="text" name="username" class="input" id="user-input" placeholder="Username" minlength="3" title="Username" required>
                             </div>
                             <p class="help is-danger" id="danger-username"></p>
                         </div>
 
                         <div class="field">
-                            <label for="" class="label">Password</label>
+                            <label for="password-input" class="label">Password</label>
                             <div class="control">
-                                <input type="password" name="password" class="input" id="password-input" placeholder="Password" minlength="5" required>
+                                <input type="password" name="password" class="input" id="password-input" placeholder="Password" minlength="5" title="Password" required>
                             </div>
                             <p class="help is-danger" id="danger-password"></p>
                         </div>
 
                         <div class="field mt-5">
-                            <button type="submit" class="button is-primary is-fullwidth">Login</button>
+                            <button type="submit" class="button is-primary is-fullwidth" title="Login">Login</button>
                         </div>
 
-                        <p class="has-text-centered mt-4">Forget Password: <a href="{% url 'forgot_password' %}" class="has-text-primary">click here</a></p>
+                        <p class="has-text-centered mt-4">
+                            Forget Password: <a href="{% url 'forgot_password' %}" class="has-text-primary" title="Forget Password">click here</a>
+                        </p>
 
                     </form>
 

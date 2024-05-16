@@ -1,12 +1,14 @@
 import secrets
 import string
 import datetime
+import threading
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods, require_GET
 from django.contrib.auth.models import User, auth
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.conf import settings
 from django.contrib import messages
 from django.http import HttpResponse
 from django_htmx.http import retarget, HttpResponseClientRedirect, HttpResponseClientRefresh
@@ -84,8 +86,13 @@ def send_reset_email(email, token):
     subject = 'Password Reset'
     reset_url = f'http://localhost:8000/auth/reset_password/{token}'
     html_message = render_to_string('email/reset_password_email.html', {'reset_url': reset_url})
-    from_email = 'dummy@gmail.com'
+    from_email = settings.EMAIL_HOST_USER
     send_mail(subject, None, from_email, [email], html_message=html_message)
+
+def send_reset_email_thread(email, token):
+
+	thread = threading.Thread(target=send_reset_email, args=(email, token))
+	thread.start()
 
 @require_http_methods(["GET", "POST"])
 def forgot_password(request):
@@ -102,7 +109,7 @@ def forgot_password(request):
 		expiration_date = timezone.now() + datetime.timedelta(minutes=10)
 		user_token = UserToken.objects.create(user=user, token=reset_token, expiration_date=expiration_date)
 		user_token.save()
-		send_reset_email(email, reset_token)
+		send_reset_email_thread(email, reset_token)
 		response = HttpResponse("Email Sent ✔️")               
 		return retarget(response, '#email-button')
 
