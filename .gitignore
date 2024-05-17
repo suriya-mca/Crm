@@ -1,2 +1,7 @@
 .env
 env
+.idx
+.vscode
+account/__pycache__/
+account/migrations/__pycache__
+core/__pycache__
