@@ -38,12 +38,51 @@ def register(request):
 			return retarget(response, '#danger-email')
             
 		user = User.objects.create_user(username=username, email=email, password=password)
+		user.is_active = False 
 		user.save()
 
-		messages.success(request, 'Registered Successfully 👍')
+		verify_token = generate_token()
+		expiration_date = timezone.now() + datetime.timedelta(minutes=10)
+		user_token = UserToken.objects.create(user=user, token=verify_token, expiration_date=expiration_date)
+		user_token.save()
+
+		url = 'https://8000-monospace-cms-1715854674699.cluster-mwrgkbggpvbq6tvtviraw2knqg.cloudworkstations.dev/auth/verify_account'
+		message = 'email/verify_account_email.html'
+		subject = 'Account Verification'
+		send_reset_email_thread(email, verify_token, url, message, subject)
+
+		messages.success(request, 'Registered Successfully! Check your mail & verify')
 		return HttpResponseClientRedirect('/auth/login')
 		   
 	return render(request, 'pages/auth/register.html')
+
+
+@require_GET
+def verify_account(request, token):
+
+	if token:
+		user_token = UserToken.objects.filter(token=token).first()
+
+		if not user_token:
+			response = "⚠️ Invalid or expired token"
+			context = {'message': response}               
+			return render(request, 'pages/auth/verify_account.html', context)
+			
+		if user_token.is_expired():
+			response = "⚠️ Token has expired"
+			context = {'message': response}
+			return render(request, 'pages/auth/verify_account.html', context)
+
+		user = user_token.user
+		user.is_active = True
+		user.save()
+		user_token.mark_as_used()
+
+		response = "Account verified successfully 👍"              
+		message = {'message': response}
+		return render(request, 'pages/auth/verify_account.html', message)
+
+	return render(request, 'pages/auth/verify_account.html')
 
 
 @require_http_methods(["GET", "POST"])
@@ -81,17 +120,17 @@ def generate_token(length=20):
     characters = string.ascii_letters + string.digits
     return ''.join(secrets.choice(characters) for _ in range(length))
 
-def send_reset_email(email, token):
+def send_reset_email(email, token, url, message, subject):
 
-    subject = 'Password Reset'
-    reset_url = f'http://localhost:8000/auth/reset_password/{token}'
-    html_message = render_to_string('email/reset_password_email.html', {'reset_url': reset_url})
+    subject = subject
+    reset_url = f'{url}/{token}'
+    html_message = render_to_string(f'{message}', {'reset_url': reset_url})
     from_email = settings.EMAIL_HOST_USER
     send_mail(subject, None, from_email, [email], html_message=html_message)
 
-def send_reset_email_thread(email, token):
+def send_reset_email_thread(email, token, url, message, subject):
 
-	thread = threading.Thread(target=send_reset_email, args=(email, token))
+	thread = threading.Thread(target=send_reset_email, args=(email, token, url, message, subject))
 	thread.start()
 
 @require_http_methods(["GET", "POST"])
@@ -109,7 +148,12 @@ def forgot_password(request):
 		expiration_date = timezone.now() + datetime.timedelta(minutes=10)
 		user_token = UserToken.objects.create(user=user, token=reset_token, expiration_date=expiration_date)
 		user_token.save()
-		send_reset_email_thread(email, reset_token)
+
+		url = 'https://8000-monospace-cms-1715854674699.cluster-mwrgkbggpvbq6tvtviraw2knqg.cloudworkstations.dev/auth/reset_password'
+		message = 'email/reset_password_email.html'
+		subject = 'Password Reset'
+		send_reset_email_thread(email, reset_token, url, message, subject)
+
 		response = HttpResponse("Email Sent ✔️")               
 		return retarget(response, '#email-button')
 

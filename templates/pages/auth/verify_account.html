@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Verify Account{% endblock %}
+
+{% block content %}
+
+	<section class="hero is-fullheight">
+	    <div class="hero-body">
+	        <div class="container has-text-centered">
+	            <h3 class="subtitle is-3" id="verify-message">{{ message }}</h3>
+	            <a href="{% url 'login' %}" class="button is-primary" title="Home Page">Log in</a>
+	        </div>
+	    </div>
+	</section>
+
+{% endblock %}
