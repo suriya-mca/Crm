@@ -1,0 +1,19 @@
+{% extends 'email/base.html' %}
+
+{% block title %}Verify Email{% endblock %}
+
+{% block content %}
+
+	<p>Hello,</p>
+    
+    <p>You've requested to verify your account with our website. Please click the link below to verify your account:</p>
+    
+    <p><a href="{{ reset_url }}">Verify Account</a></p>
+
+    <p><strong>Note: Token will expire in 10 mins.</strong></p>
+    
+    <p>If you don't create an account with us, you can safely ignore this email.</p>
+    
+    <p>Thank you!</p>
+
+{% endblock %}

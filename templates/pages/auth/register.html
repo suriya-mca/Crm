@@ -12,9 +12,9 @@
             <div class="columns is-centered">
                 <div class="column is-5-tablet is-4-desktop is-4-widescreen">
 
-                    <p class="title is-5 mb-5 has-text-centered">Cms/register</p>
-
                     <form class="box" hx-post="{% url 'register' %}" hx-target="#messages-container">
+
+                        <p class="title is-5 mb-5 py-3 has-text-centered">Cms/register</p>
 
                         <div class="msg" id="messages-container"></div>
 
@@ -50,7 +50,7 @@
                             <p class="help is-danger" id="danger-confirm-password"></p>
                         </div>
 
-                        <div class="field mt-5">
+                        <div class="field mt-5 mb-1">
                             <button type="submit" class="button is-primary is-fullwidth" title="Register">Register</button>
                         </div>
 
