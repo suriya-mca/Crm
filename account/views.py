@@ -1,25 +1,20 @@
-import secrets
-import string
 import datetime
-import threading
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods, require_GET
 from django.contrib.auth.models import User, auth
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.conf import settings
 from django.contrib import messages
 from django.http import HttpResponse
 from django_htmx.http import retarget, HttpResponseClientRedirect, HttpResponseClientRefresh
 
 from .models import UserToken
+from .utils import send_reset_email_thread, generate_token
 
 
 @require_http_methods(["GET", "POST"])
 def register(request):
 
-	if request.htmx:
+	if request.htmx and request.POST:
 		username = request.POST['username']
 		email = request.POST['email']
 		password = request.POST['password']
@@ -60,35 +55,32 @@ def register(request):
 @require_GET
 def verify_account(request, token):
 
-	if token:
-		user_token = UserToken.objects.filter(token=token).first()
+	user_token = UserToken.objects.filter(token=token).first()
 
-		if not user_token:
-			response = "⚠️ Invalid or expired token"
-			context = {'message': response}               
-			return render(request, 'pages/auth/verify_account.html', context)
+	if not user_token:
+		response = "⚠️ Invalid or expired token"
+		context = {'message': response}               
+		return render(request, 'pages/auth/verify_account.html', context)
 			
-		if user_token.is_expired():
-			response = "⚠️ Token has expired"
-			context = {'message': response}
-			return render(request, 'pages/auth/verify_account.html', context)
+	if user_token.is_expired():
+		response = "⚠️ Token has expired"
+		context = {'message': response}
+		return render(request, 'pages/auth/verify_account.html', context)
 
-		user = user_token.user
-		user.is_active = True
-		user.save()
-		user_token.mark_as_used()
+	user = user_token.user
+	user.is_active = True
+	user.save()
+	user_token.mark_as_used()
 
-		response = "Account verified successfully 👍"              
-		message = {'message': response}
-		return render(request, 'pages/auth/verify_account.html', message)
-
-	return render(request, 'pages/auth/verify_account.html')
+	response = "Account verified successfully 👍"              
+	message = {'message': response}
+	return render(request, 'pages/auth/verify_account.html', message)
 
 
 @require_http_methods(["GET", "POST"])
 def login(request):
 
-	if request.htmx:
+	if request.htmx and request.POST:
 		username = request.POST['username']
 		password = request.POST['password']
 
@@ -115,28 +107,10 @@ def logout(request):
     return redirect('login')
 
 
-def generate_token(length=20):
-
-    characters = string.ascii_letters + string.digits
-    return ''.join(secrets.choice(characters) for _ in range(length))
-
-def send_reset_email(email, token, url, message, subject):
-
-    subject = subject
-    reset_url = f'{url}/{token}'
-    html_message = render_to_string(f'{message}', {'reset_url': reset_url})
-    from_email = settings.EMAIL_HOST_USER
-    send_mail(subject, None, from_email, [email], html_message=html_message)
-
-def send_reset_email_thread(email, token, url, message, subject):
-
-	thread = threading.Thread(target=send_reset_email, args=(email, token, url, message, subject))
-	thread.start()
-
 @require_http_methods(["GET", "POST"])
 def forgot_password(request):
 
-	if request.htmx:
+	if request.htmx and request.POST:
 		email = request.POST['email']
 		user = User.objects.filter(email=email).first()
 
@@ -163,7 +137,7 @@ def forgot_password(request):
 @require_http_methods(["GET", "POST"])
 def reset_password(request, token):
 
-	if request.htmx:
+	if request.htmx and request.POST:
 		password = request.POST['password']
 		confirm_password = request.POST['confirm_password']
 
