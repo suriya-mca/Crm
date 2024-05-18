@@ -128,7 +128,7 @@ def forgot_password(request):
 		subject = 'Password Reset'
 		send_reset_email_thread(email, reset_token, url, message, subject)
 
-		response = HttpResponse("Email Sent ✔️")               
+		response = HttpResponse("Email Sent!")               
 		return retarget(response, '#email-button')
 
 	return render(request, 'pages/auth/forget_password.html')

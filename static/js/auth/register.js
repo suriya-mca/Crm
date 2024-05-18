@@ -47,3 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+function onSubmit(token) {
+    document.getElementById("register-form").submit();
+}

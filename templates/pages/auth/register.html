@@ -12,9 +12,9 @@
                 <div class="columns is-centered">
                     <div class="column is-5-tablet is-4-desktop is-4-widescreen">
 
-                        <form class="box" id="register-form" hx-post="{% url 'register' %}" hx-target="#messages-container">
+                        <form id="register-form" class="box" hx-post="{% url 'register' %}" hx-target="#messages-container">
 
-                            <p class="title is-5 mb-5 py-3 has-text-centered">Cms/register</p>
+                            <p class="title is-4 mb-5 py-3 has-text-centered">Cms/register</p>
 
                             <div class="msg" id="messages-container"></div>
 
@@ -51,12 +51,16 @@
                             </div>
 
                             <div>
-                                <div class="g-recaptcha" data-sitekey="6Ldl-OApAAAAAM8W_RKijNnJspD5kbagLQLmcPCI" data-theme="dark"></div>
+                                <div class="g-recaptcha" data-sitekey="6LcmAeEpAAAAAMskotNSLgvMD3aKb_2Hm5YpZtOl" data-callback="onSubmit" data-size="invisible" required></div>
                             </div>
 
                             <div class="field mt-5 mb-1">
-                                <button type="submit" class="button is-primary is-fullwidth" title="Register">Register</button>
+                                <button type="submit" class="button is-primary is-dark is-fullwidth" title="Register">Register</button>
                             </div>
+
+                            <p class="has-text-centered mt-4">
+                                <a href="{% url 'login' %}" class="has-text-light" title="Forget Password">Already have an account?</a>
+                            </p>
 
                         </form>
 
