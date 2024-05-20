@@ -7,11 +7,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("SECRET_KEY")
 
-DEBUG = config("DEBUG")
+DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = ['https://8000-monospace-cms-1715854674699.cluster-mwrgkbggpvbq6tvtviraw2knqg.cloudworkstations.dev', '127.0.0.1', 'localhost']
 
 CSRF_TRUSTED_ORIGINS = ['https://8000-monospace-cms-1715854674699.cluster-mwrgkbggpvbq6tvtviraw2knqg.cloudworkstations.dev']
+
+SECURE_BROWSER_XSS_FILTER = config("SECURE_BROWSER_XSS_FILTER", cast=bool)
+SECURE_CONTENT_TYPE_NOSNIFF = config("SECURE_CONTENT_TYPE_NOSNIFF", cast=bool)
+
+SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=False, cast=bool)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS")
+SECURE_HSTS_PRELOAD = config("SECURE_HSTS_PRELOAD", cast=bool)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = config("SECURE_HSTS_INCLUDE_SUBDOMAINS", cast=bool)
+
+SESSION_COOKIE_SECURE = config("SESSION_COOKIE_SECURE", cast=bool)
+CSRF_COOKIE_SECURE = config("CSRF_COOKIE_SECURE", cast=bool)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
