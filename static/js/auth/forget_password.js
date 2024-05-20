@@ -15,3 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+document.addEventListener('htmx:afterOnLoad', function(evt) {
+    const emailButton = document.getElementById('email-button');
+    if (evt.detail.target.id === 'email-button' && evt.detail.xhr.responseText.includes('Email Sent')) {
+        emailButton.classList.add('is-static', 'has-text-primary');
+        emailButton.textContent = 'Email Sent';
+        setTimeout(() => {
+            emailButton.classList.remove('is-static', 'has-text-primary');
+            emailButton.textContent = 'Send Mail';
+        }, 60000);
+    }
+});
