@@ -2,4 +2,9 @@ from django.contrib import admin
 from .models import UserToken
 
 
-admin.site.register(UserToken)
+class UserTokenAdmin(admin.ModelAdmin):
+    list_display = ('user','token','expiration_date', 'used', 'expired')
+    list_filter = ("used", "expired")
+    search_fields = ['user']
+    
+admin.site.register(UserToken, UserTokenAdmin)
