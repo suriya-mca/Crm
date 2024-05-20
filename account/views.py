@@ -15,10 +15,22 @@ from .utils import send_reset_email_thread, generate_token
 def register(request):
 
 	if request.htmx and request.POST:
-		username = request.POST['username']
-		email = request.POST['email']
-		password = request.POST['password']
-		confirm_password = request.POST['confirm_password']
+		username = request.POST['username'].strip()
+		email = request.POST['email'].strip()
+		password = request.POST['password'].strip()
+		confirm_password = request.POST['confirm_password'].strip()
+
+		if not username:
+			response = HttpResponse("Username is required")               
+			return retarget(response, '#danger-username')
+
+		if not email:
+			response = HttpResponse("Email is required")               
+			return retarget(response, '#danger-email')
+
+		if not password:
+			response = HttpResponse("Password is required")               
+			return retarget(response, '#danger-password')
 
 		if not password == confirm_password:
 			response = HttpResponse("Confirm pasword not matching")               
@@ -72,7 +84,7 @@ def verify_account(request, token):
 	user.save()
 	user_token.mark_as_used()
 
-	response = "Account verified successfully 👍"              
+	response = "Account verified successfully!"              
 	message = {'message': response}
 	return render(request, 'pages/auth/verify_account.html', message)
 
@@ -81,8 +93,16 @@ def verify_account(request, token):
 def login(request):
 
 	if request.htmx and request.POST:
-		username = request.POST['username']
-		password = request.POST['password']
+		username = request.POST['username'].strip()
+		password = request.POST['password'].strip()
+
+		if not username:
+			response = HttpResponse("Username is required")               
+			return retarget(response, '#danger-username')
+
+		if not password:
+			response = HttpResponse("Password is required")               
+			return retarget(response, '#danger-password')
 
 		if not User.objects.filter(username=username).exists():
 			response = HttpResponse("Username not exists")               
@@ -128,7 +148,7 @@ def forgot_password(request):
 		subject = 'Password Reset'
 		send_reset_email_thread(email, reset_token, url, message, subject)
 
-		response = HttpResponse("Email Sent ✔️")               
+		response = HttpResponse("Email Sent!")               
 		return retarget(response, '#email-button')
 
 	return render(request, 'pages/auth/forget_password.html')
@@ -138,8 +158,8 @@ def forgot_password(request):
 def reset_password(request, token):
 
 	if request.htmx and request.POST:
-		password = request.POST['password']
-		confirm_password = request.POST['confirm_password']
+		password = request.POST['password'].strip()
+		confirm_password = request.POST['confirm_password'].strip()
 
 		user_token = UserToken.objects.filter(token=token).first()
 
@@ -150,6 +170,10 @@ def reset_password(request, token):
 		if user_token.is_expired():
 			messages.warning(request, '⚠️ Token has expired')
 			return HttpResponseClientRefresh()
+
+		if not password:
+			response = HttpResponse("Password is required")               
+			return retarget(response, '#danger-password')
 
 		if not password == confirm_password:
 			response = HttpResponse("Confirm pasword not matching")               
