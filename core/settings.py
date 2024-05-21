@@ -7,11 +7,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("SECRET_KEY")
 
-DEBUG = config("DEBUG", cast=bool)
+DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = ['https://8000-monospace-cms-1715854674699.cluster-mwrgkbggpvbq6tvtviraw2knqg.cloudworkstations.dev', 'https://5000-monospace-cms-1715854674699.cluster-mwrgkbggpvbq6tvtviraw2knqg.cloudworkstations.dev', '127.0.0.1', 'localhost']
 
-CSRF_TRUSTED_ORIGINS = ['https://8000-monospace-cms-1715854674699.cluster-mwrgkbggpvbq6tvtviraw2knqg.cloudworkstations.dev', 'https://5000-monospace-cms-1715854674699.cluster-mwrgkbggpvbq6tvtviraw2knqg.cloudworkstations.dev']
+CSRF_TRUSTED_ORIGINS = ['https://8000-monospace-cms-1715854674699.cluster-mwrgkbggpvbq6tvtviraw2knqg.cloudworkstations.dev', 'https://5000-monospace-cms-1715854674699.cluster-mwrgkbggpvbq6tvtviraw2knqg.cloudworkstations.dev', 'http://127.0.0.1', 'http://localhost']
 
 SECURE_BROWSER_XSS_FILTER = config("SECURE_BROWSER_XSS_FILTER", cast=bool)
 SECURE_CONTENT_TYPE_NOSNIFF = config("SECURE_CONTENT_TYPE_NOSNIFF", cast=bool)
@@ -103,12 +103,18 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR ,'static_root')
+# STATIC_URL = 'static/'
+# STATIC_ROOT = os.path.join(BASE_DIR ,'static')
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_src')]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = 'media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_URL = "static/"   
+MEDIA_URL = "media/"    
+
+STATIC_ROOT = "/vol/static"
+MEDIA_ROOT = "/vol/media"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = config("EMAIL_HOST")
