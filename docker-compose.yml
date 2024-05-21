@@ -2,17 +2,6 @@ version: '3.8'
 
 services:
 
-    nginx:
-        image: nginx:alpine
-        container_name: cms-gateway
-        ports:
-            - "8000:80"
-            - "443:443"
-        volumes:
-            - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
-        depends_on:
-            - app
-
     app:
         build: .
         env_file: .env
@@ -20,4 +9,18 @@ services:
         ports:
             - "8000"
         volumes:
-            - .:/app
+            - static-data:/vol/static
+
+    proxy:
+        build:
+            context: ./proxy
+        env_file: .env
+        volumes:
+            - static-data:/vol/static
+        ports:
+            - 80:80
+        depends_on:
+            - app
+
+volumes:
+    static-data:
