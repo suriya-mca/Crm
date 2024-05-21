@@ -23,3 +23,12 @@ class UserToken(models.Model):
 	def mark_as_used(self):
 		self.used = True
 		self.save()
+
+	class Meta:
+		indexes = [
+			models.Index(fields=['user']),
+			models.Index(fields=['token']),
+			models.Index(fields=['expiration_date']),
+			models.Index(fields=['used']),
+			models.Index(fields=['expired']),
+		]

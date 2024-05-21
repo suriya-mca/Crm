@@ -103,18 +103,18 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# STATIC_URL = 'static/'
-# STATIC_ROOT = os.path.join(BASE_DIR ,'static')
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_src')]
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR ,'static')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_src')]
 
-# MEDIA_URL = 'media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATIC_URL = "static/"   
-MEDIA_URL = "media/"    
+# STATIC_URL = "static/"   
+# MEDIA_URL = "media/"    
 
-STATIC_ROOT = "/vol/static"
-MEDIA_ROOT = "/vol/media"
+# STATIC_ROOT = "/vol/static"
+# MEDIA_ROOT = "/vol/media"
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = config("EMAIL_HOST")
@@ -134,15 +134,15 @@ MESSAGE_TAGS = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-#         "LOCATION": config("CACHE_LOCATION"),
-#         "OPTIONS": {
-#             "pool_class": "redis.BlockingConnectionPool",
-#         },
-#         "KEY_PREFIX": "cms_cache",
-#     }
-# }
-# CACHE_MIDDLEWARE_ALIAS = 'default'
-# CACHE_MIDDLEWARE_SECONDS = 900
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": config("CACHE_LOCATION"),
+        "OPTIONS": {
+            "pool_class": "redis.BlockingConnectionPool",
+        },
+        "KEY_PREFIX": "cms_cache",
+    }
+}
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 900
