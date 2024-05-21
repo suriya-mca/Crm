@@ -1,3 +1,5 @@
+{% load compress %}
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -33,7 +35,16 @@
       
     </div>
 
-    <script src="{% static 'js/htmx/htmx.min.js' %}" defer></script>
+    {% compress js %}
+
+        <script src="{% static 'js/htmx/htmx.min.js' %}" defer></script>
+        <script src="{% static 'js/partial/nav.js' %}" defer></script>
+        <script src="{% static 'js/auth/login.js' %}" defer></script>
+        <script src="{% static 'js/auth/register.js' %}" defer></script>
+        <script src="{% static 'js/auth/reset_password.js' %}" defer></script>
+        <script src="{% static 'js/auth/forget_password.js' %}" defer></script>
+    
+    {% endcompress %}
 
 </body>
 
