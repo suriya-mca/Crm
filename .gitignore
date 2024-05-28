@@ -7,3 +7,4 @@ account/migrations/__pycache__
 cms/__pycache__/
 cms/migrations/__pycache__
 core/__pycache__
+postgres
