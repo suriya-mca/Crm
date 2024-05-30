@@ -109,7 +109,7 @@ def login(request):
 			response = HttpResponse("Username not exists")               
 			return retarget(response, '#danger-username')
 
-		if not User.objects.filter(username=username).first().is_active:
+		if not User.objects.filter(username=username, is_active=True).exists():
 			response = HttpResponse("Account not verified, check your mail")               
 			return retarget(response, '#danger-username')
 

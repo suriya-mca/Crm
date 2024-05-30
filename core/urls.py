@@ -9,7 +9,6 @@ def trigger_error(request):
 urlpatterns = [
     path('cms-admin-s_/', admin.site.urls),
     path('auth/', include('account.urls')),
-    path('cms/', include('cms.urls')),
     path('sentry-debug/', trigger_error),
 ]
 
