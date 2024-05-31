@@ -12,6 +12,7 @@ SECRET_KEY = config("SECRET_KEY")
 
 LOCAL_APPS = [
     'account',
+    'contact',
 ]
 
 THIRD_PARTY_APPS = [

@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Crm{% endblock %}</title>
+    <title>{% block title %} {% endblock %}</title>
     
     <meta name="description" content="Content Management System">
     <meta name="keywords" content="Cms, Blog, Posts">
@@ -23,10 +23,10 @@
 
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 
-    {% include 'includes/nav.html' %}    
+    {% include 'includes/nav.html' %}
 
     <div class="container">
-
+        
         {% block content %}
 
         {% endblock content %}

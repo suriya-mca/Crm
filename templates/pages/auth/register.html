@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'pages/auth/base.html' %}
 
 {% block title %}Register{% endblock %}
 
@@ -14,7 +14,7 @@
 
                         <form id="register-form" class="box" hx-post="{% url 'register' %}" hx-target="#messages-container">
 
-                            <p class="title is-4 mb-5 py-3 has-text-centered">Cms/register</p>
+                            <p class="title is-4 mb-5 py-3 has-text-centered">Crm/register</p>
 
                             <div class="msg" id="messages-container"></div>
 

@@ -120,7 +120,7 @@ def login(request):
 			return retarget(response, '#danger-password')
 
 		auth.login(request, user)
-		return HttpResponseClientRedirect('/auth/register')
+		return HttpResponseClientRedirect('/contact/lists')
        
 	return render(request, 'pages/auth/login.html')
 

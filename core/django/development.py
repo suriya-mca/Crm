@@ -3,7 +3,7 @@ from .base import *
 
 DEBUG = config("DEBUG", default=False, cast=bool)
 
-DOMAIN = 'https://8000-idx-cms-1716871489073.cluster-bs35cdu5w5cuaxdfch3hqqt7zm.cloudworkstations.dev'
+DOMAIN = 'https://8000-idx-crm-1717074082797.cluster-bec2e4635ng44w7ed22sa22hes.cloudworkstations.dev'
 
 ALLOWED_HOSTS = [DOMAIN, '127.0.0.1', 'localhost', "*"]
 

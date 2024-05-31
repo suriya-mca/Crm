@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Contacts | {{user.username}}{% endblock %}
+
+{% load static %}
+
+{% block content %}
+    <section class="hero my-6">
+        <div class="colums is-flex is-flex-direction-row">
+            <div class="column">
+                <h1 class="title is-4">Contacts</h1>
+            </div>
+            <div class="column is-narrow">
+                <a class="button is-primary is-dark js-modal-trigger" data-target="modal-js-example" title="Add Contact">+</a>
+            </div>
+        </div>
+        <table class="table is-striped is-hoverable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Category</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                <tr>
+                    <td>{{ contact.name }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>{{ contact.phone }}</td>
+                    <td>{{ contact.address }}</td>
+                    <td>{{ contact.get_category_display }}</td>
+                    <td><a href="#" class="button is-small is-dark">View</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+	{% include 'includes/create_contact_model.html' %}
+
+    <script src="{% static 'js/contact/create_contact_model.js' %}" defer></script>
+    
+{% endblock %}

@@ -1,15 +1,17 @@
 from django.contrib import admin
+from django.shortcuts import render
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-def trigger_error(request):
-    division_by_zero = 1 / 0
+def home(request):
+	return render(request, 'pages/home/index.html')
 
 urlpatterns = [
-    path('cms-admin-s_/', admin.site.urls),
+    path('', home, name = 'home'),
+    path('crm-admin-secure/', admin.site.urls),
     path('auth/', include('account.urls')),
-    path('sentry-debug/', trigger_error),
+    path('contact/', include('contact.urls')),
 ]
 
 if settings.DEBUG:
