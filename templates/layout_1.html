@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load static %}
+        
+{% block layout %}
+
+    {% include 'includes/nav.html' %}
+
+    <div class="container" id="messages-container" hx-boost="true">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </div>
+
+    <script src="{% static 'js/partial/nav.js' %}" defer></script>
+
+{% endblock %}

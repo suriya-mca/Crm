@@ -21,20 +21,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
 </head>
 
-<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-
-    {% include 'includes/nav.html' %}
-
-    <div class="container">
+<body id="body" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         
-        {% block content %}
+    {% block layout %}
 
-        {% endblock content %}
-      
-    </div>
+    {% endblock %}
 
     <script src="{% static 'js/htmx/htmx.min.js' %}" defer></script>
-    <script src="{% static 'js/partial/nav.js' %}" defer></script>
 
 </body>
 
