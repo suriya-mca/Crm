@@ -3,7 +3,6 @@
 .vscode
 env
 docker_dev
-static
 account/__pycache__/
 account/migrations/__pycache__
 contact/__pycache__/
