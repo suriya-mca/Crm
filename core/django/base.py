@@ -34,6 +34,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -97,7 +98,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR ,'static')
+STATIC_ROOT = os.path.join(BASE_DIR ,'../static')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, '../static_src')]
 
 MEDIA_URL = 'media/'
@@ -121,4 +122,4 @@ MESSAGE_TAGS = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-from core.settings.sentry import *
+# from core.settings.sentry import *

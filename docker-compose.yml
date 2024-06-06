@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3'
 
 services:
 
@@ -7,20 +7,9 @@ services:
         env_file: .env
         container_name: cms
         ports:
-            - "8000"
+            - "8000:8000"
         volumes:
-            - static-data:/vol/static
-
-    proxy:
-        build:
-            context: ./proxy
-        env_file: .env
-        volumes:
-            - static-data:/vol/static
-        ports:
-            - "80:80"
-        depends_on:
-            - app
+            - static-data:/static
 
 volumes:
     static-data:
