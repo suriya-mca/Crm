@@ -1,5 +1,5 @@
 asgiref==3.8.1
-Django==5.0.9
+Django==5.0.10
 django-htmx==1.17.3
 gunicorn==22.0.0
 packaging==24.0
